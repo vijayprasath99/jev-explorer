@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jev API Explorer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h1>Jev API Explorer</h1>
+      <p class="tagline">Edit the request body directly, field by field, exactly as TypeSafe AI's <code>/v1/systemone</code> expects it.</p>
+
+      <div class="panel-box">
+        <h2>Connection</h2>
+
+        <div class="config-row">
+          <span class="config-row__label">Endpoint</span>
+          <code class="config-row__value" id="config-endpoint">loading…</code>
+        </div>
+        <div class="config-row">
+          <span class="config-row__label">API key</span>
+          <span class="config-row__value" id="config-key-status">loading…</span>
+        </div>
+
+        <p class="hint">
+          Set via <code>JEV_ENDPOINT</code> / <code>JEV_API_KEY</code> environment variables (or a
+          <code>.env</code> file) before starting the server &mdash; never typed into the page or written to
+          disk from here. Requests are relayed through this page's Node service, so the browser never calls
+          the API directly &mdash; no CORS issues.
+        </p>
+      </div>
+
+      <div class="panel-box">
+        <h2>Load an example</h2>
+        <div class="preset-list" id="preset-list"></div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="sample-response-toggle" checked />
+          Show a sample response
+        </label>
+      </div>
+
+      <div class="panel-box reference">
+        <h2>Question types</h2>
+        <dl>
+          <dt><span class="type-tag type-tag--noul">noul</span></dt>
+          <dd>Yes/no. Returns a single probability (0&ndash;1) that the answer is "yes".</dd>
+          <dt><span class="type-tag type-tag--choice">choice</span></dt>
+          <dd>Pick one named option. Returns the winning choice, a probability per option, and overall confidence.</dd>
+          <dt><span class="type-tag type-tag--score">score</span></dt>
+          <dd>Rate against 2&ndash;10 ordered levels. Returns a probability-weighted score, a legend, and per-level probabilities.</dd>
+        </dl>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <div class="split">
+        <section class="pane pane--request">
+          <div class="pane__scroll">
+            <div class="json-editor" id="json-editor"></div>
+          </div>
+
+          <div class="pane__footer">
+            <button class="btn btn--primary" id="send-btn">Send Request</button>
+            <p class="error" id="send-error"></p>
+          </div>
+        </section>
+
+        <section class="pane pane--response">
+          <div class="pane__scroll">
+            <h2>Response</h2>
+            <div class="response-meta" id="response-meta">No request sent yet.</div>
+            <pre id="response-body"></pre>
+
+            <div class="history-log">
+              <h3>Request Log</h3>
+              <ul id="log-list"><li class="log-empty">Nothing sent yet.</li></ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
